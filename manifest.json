@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+  "name":"AsakusaSatellite for Chrome",
+  "version":"0.1",
+  "description":"AsakusaSatellite Client for Chrome",
+  "browser_action":{
+    "default_icon":"favicon.ico",
+    "default_popup":"popup.html"
+  },
+  "permissions":[
+    "http://*/*", "https://*/*"
+  ]
+}
