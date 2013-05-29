@@ -6,20 +6,34 @@
 
   <body>
     <script type="text/x-handlebars">
-      <div id="room-list"></div>
-      {{#linkTo 'index'}}Home{{/linkTo}}
-      {{#linkTo 'about'}}About{{/linkTo}}
+      {{#linkTo 'rooms'}}Room{{/linkTo}}
+      {{#linkTo 'setting'}}Setting{{/linkTo}}
       {{outlet}}
     </script>
 
     <script type="text/x-handlebars" data-template-name="index">
-      Hello world from ember.js
+    <div>
+      <span>Hello world from ember.js</span>
+    </div>
     </script>
 
-    <script type="text/x-handlebars" id="about">
-      <div class='about'>
-        <h1>About This App</h1>
-      </div>
+    <script type="text/x-handlebars" data-template-name="rooms">
+    <h3>Rooms</h3>
+    <ul>
+    {{#each model}}
+    <li>{{#linkTo 'room' this}}{{name}}{{/linkTo}}</li>
+    {{/each}}
+    </ul>
+    {{outlet}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="room">
+    <h3>Room</h3>
+    <div>{{model}}</div>
+    <div>{{model.messages}}</div>
+    </script>
+
+    <script type="text/x-handlebars" id="setting">
     </script>
 
   </body>
@@ -27,5 +41,6 @@
   <script src="js/libs/jquery-1.9.1.js"></script>
   <script src="js/libs/handlebars-1.0.0-rc.4.js"></script>
   <script src="js/libs/ember-1.0.0-rc4.js"></script>
+  <script src="js/libs/ember-data-master.js"></script>
   <script src="js/app.js"></script>
 </html>
