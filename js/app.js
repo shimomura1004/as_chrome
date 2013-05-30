@@ -58,7 +58,7 @@ App.RoomRoute = Ember.Route.extend({
         var newModel = {};
         newModel.room = model;
         newModel.messages = [];
-        bg.messages[model.id].map(function(m){newModel.messages.push(m)});
+        bg.messages[model.id].map(function(m){newModel.messages.unshift(m)});
         controller.set('content', newModel);
     }
 });

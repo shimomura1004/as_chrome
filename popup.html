@@ -27,10 +27,10 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="room">
-    <h5>{{model.room.name}}</h5>
+    <h3>{{model.room.name}}</h3>
 
     {{#each content.messages}}
-    <div style="margin-bottom: 10px;">
+    <div style="margin-bottom: 10px; clear: left;">
       <div>
         <img {{bindAttr src="profile_image_url"}} style="max-width: 40px; max-height: 40px; border-radius: 3px; float: left;"></img>
       </div>

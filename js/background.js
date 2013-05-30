@@ -14,7 +14,6 @@ $.get(url + "/api/v1/room/list.json", data, function(json){
     $.each(rooms, function(idx, room){
         var data = $.extend(data, {room_id: room.id});
         $.get(url + "/api/v1/message/list.json", data, function(json){
-            //messages = messages.concat(json);
             messages[room.id] = json;
             
             counter += json.length;
