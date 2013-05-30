@@ -18,7 +18,6 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="rooms">
-    <h3>Rooms</h3>
     <ul>
     {{#each model}}
     <li>{{#linkTo 'room' this}}{{name}}{{/linkTo}}</li>
@@ -28,9 +27,23 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="room">
-    <h3>Room</h3>
-    {{#each content}}
-    <div>{{body}}</div>
+    <h5>{{model.room.name}}</h5>
+
+    {{#each content.messages}}
+    <div style="margin-bottom: 10px;">
+      <div>
+        <img {{bindAttr src="profile_image_url"}} style="max-width: 40px; max-height: 40px; border-radius: 3px; float: left;"></img>
+      </div>
+      <div style="margin-left: 50px;">
+        <div style="font-size: 10pt; margin-bottom: 3px;">
+          <span>{{name}}</span>
+          <span>{{created_at}}</span>
+        </div>
+        <div>
+          <span style="font-size: 12pt;">{{body}}</span>
+        </div>
+      </div>
+    </div>
     {{/each}}
     </script>
 

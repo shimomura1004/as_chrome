@@ -55,12 +55,11 @@ App.RoomsRoute = Ember.Route.extend({
 });
 App.RoomRoute = Ember.Route.extend({
     setupController: function(controller, model){
-        var messages = bg.messages[model.id];
-        var eMessages = [];
-        messages.map(function(message){
-            eMessages.push(message);
-        });
-        controller.set('content', eMessages);
+        var newModel = {};
+        newModel.room = model;
+        newModel.messages = [];
+        bg.messages[model.id].map(function(m){newModel.messages.push(m)});
+        controller.set('content', newModel);
     }
 });
 
@@ -69,7 +68,6 @@ App.RoomRoute = Ember.Route.extend({
 //------------------------------------------------------------
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     if(request.AsakusaSatelliteUpdate) {
-
 //        console.log("update "+request.AsakusaSatelliteUpdate);
 //        console.log(eval("bg." + request.AsakusaSatelliteUpdate));
     }
