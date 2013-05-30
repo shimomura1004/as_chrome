@@ -4,7 +4,7 @@ var token = "yTzvPnmThlRBCS0udKyEliEijJ2mR"
 chrome.browserAction.setBadgeBackgroundColor({color:[190, 190, 190, 230]});
 
 var rooms = [];
-var messages = [];
+var messages = {};
 
 var data = {auth_token:token};
 $.get(url + "/api/v1/room/list.json", data, function(json){
@@ -14,11 +14,8 @@ $.get(url + "/api/v1/room/list.json", data, function(json){
     $.each(rooms, function(idx, room){
         var data = $.extend(data, {room_id: room.id});
         $.get(url + "/api/v1/message/list.json", data, function(json){
-            //room.messages = json;
-            $.map(json, function(message, idx){
-                message.room = message.room.id;
-            });
-            messages = messages.concat(json);
+            //messages = messages.concat(json);
+            messages[room.id] = json;
             
             counter += json.length;
 

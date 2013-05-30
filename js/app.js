@@ -35,7 +35,9 @@ App.Message = DS.Model.extend({
 
 // model setup
 App.Room.FIXTURES = bg.rooms;
-App.Message.FIXTURES = bg.messages;
+App.messages = Ember.ArrayController.create({
+    content: [],
+});
 
 //------------------------------------------------------------
 // routing set up
@@ -51,13 +53,22 @@ App.RoomsRoute = Ember.Route.extend({
         return App.Room.find();
     }
 });
+App.RoomRoute = Ember.Route.extend({
+    setupController: function(controller, model){
+        var messages = bg.messages[model.id];
+        var eMessages = [];
+        messages.map(function(message){
+            eMessages.push(message);
+        });
+        controller.set('content', eMessages);
+    }
+});
 
 //------------------------------------------------------------
 // callbacks
 //------------------------------------------------------------
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     if(request.AsakusaSatelliteUpdate) {
-//        App.Message.FIXTURES = bg.messages;
 
 //        console.log("update "+request.AsakusaSatelliteUpdate);
 //        console.log(eval("bg." + request.AsakusaSatelliteUpdate));

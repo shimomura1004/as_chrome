@@ -29,8 +29,9 @@
 
     <script type="text/x-handlebars" data-template-name="room">
     <h3>Room</h3>
-    <div>{{model}}</div>
-    <div>{{model.messages}}</div>
+    {{#each content}}
+    <div>{{body}}</div>
+    {{/each}}
     </script>
 
     <script type="text/x-handlebars" id="setting">
