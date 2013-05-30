@@ -1,27 +1,42 @@
 var url = "http://10.5.5.83:8080"
 var token = "yTzvPnmThlRBCS0udKyEliEijJ2mR"
 
+var interval = 10 * 1000;
+
 chrome.browserAction.setBadgeBackgroundColor({color:[190, 190, 190, 230]});
 
 var rooms = [];
 var messages = {};
+var counter = 0;
 
-var data = {auth_token:token};
-$.get(url + "/api/v1/room/list.json", data, function(json){
-    rooms = json;
+function getNewMessages(){
+    function getNewMessageInRoom(room){
+        var _messages =  messages[room.id] || [];
+        data["room_id"] = room.id;
+        if (_messages && _messages.length > 0) {
+            data["since_id"] = _messages[_messages.length - 1].id;
+        }
 
-    var counter = 0;
-    $.each(rooms, function(idx, room){
-        var data = $.extend(data, {room_id: room.id});
         $.get(url + "/api/v1/message/list.json", data, function(json){
-            messages[room.id] = json;
-            
+            json = json.slice(1);
+            messages[room.id] = _messages.concat(json);
             counter += json.length;
 
             chrome.browserAction.setBadgeText({text:""+counter});
 
-            var update = "messages";
-            chrome.runtime.sendMessage({AsakusaSatelliteUpdate:update});
+            if (json.length > 0){
+                var update = "messages['"+room.id+"']";
+                chrome.runtime.sendMessage({AsakusaSatelliteUpdate:update});
+            }
         });
+    }
+
+    var data = {auth_token:token};
+    $.get(url + "/api/v1/room/list.json", data, function(json){
+        rooms = json;
+        $.each(rooms, function(idx, room){ getNewMessageInRoom(room); });
     });
-});
+}
+
+getNewMessages();
+setInterval(getNewMessages, interval);
