@@ -35,6 +35,9 @@ App.Message = DS.Model.extend({
 
 // model setup
 App.Room.FIXTURES = bg.rooms;
+App.rooms = Ember.ArrayController.create({
+    content: [],
+});
 App.messages = Ember.ArrayController.create({
     content: [],
 });
@@ -48,11 +51,19 @@ App.Router.map(function() {
     this.resource("room", {path:"/room/:room_id"});
     this.resource("setting");
 });
+
 App.RoomsRoute = Ember.Route.extend({
-    model: function(){
-        return App.Room.find();
-    }
+    setupController: function(controller, model){
+        var rooms = [];
+        bg.rooms.sort(function(r1,r2){
+            return Date.parse(r1.updated_at) > Date.parse(r2.updated_at);
+        }).map(function(room){
+            rooms.unshift(room);
+        });
+        controller.set('content', rooms);
+    },
 });
+
 App.RoomRoute = Ember.Route.extend({
     setupController: function(controller, roomModel){
         var model = {};

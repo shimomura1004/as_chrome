@@ -7,6 +7,7 @@ chrome.browserAction.setBadgeBackgroundColor({color:[190, 190, 190, 230]});
 
 var rooms = [];
 var messages = {};
+var updated_at = {};
 var counter = 0;
 
 function getNewMessages(){
@@ -34,7 +35,12 @@ function getNewMessages(){
     var data = {auth_token:token};
     $.get(url + "/api/v1/room/list.json", data, function(json){
         rooms = json;
-        $.each(rooms, function(idx, room){ getNewMessageInRoom(room); });
+        $.each(rooms, function(idx, room){
+            if (updated_at[room.id] != room.updated_at) {
+                updated_at[room.id] = room.updated_at;
+                getNewMessageInRoom(room);
+            }
+        });
     });
 }
 
