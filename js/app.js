@@ -71,29 +71,26 @@ App.RoomRoute = Ember.Route.extend({
 
 App.ServerUrlTextField = Ember.TextField.extend({
     serverUrlBinding: "App.Setting.serverUrl",
-    change: function(e){
-        bg.url = App.setting.get("serverUrl");
-        bg.token = App.setting.get("secretKey");
-        bg.clearData();
-        bg.getNewMessages();
-    },
 });
 App.SecretKeyTextField = Ember.TextField.extend({
     secretKeyBinding: "App.Setting.secretKey",
-    change: function(e){
-        bg.url = App.setting.get("serverUrl");
-        bg.token = App.setting.get("secretKey");
-        bg.clearData();
-        bg.getNewMessages();
-    },
 });
-App.Setting = Ember.Object.extend({
+
+App.setting = (Ember.Object.extend({
     serverUrl: "",
     secretKey: "",
+})).create({
+    serverUrl: bg.localStorage.getItem("serverUrl") || "",
+    secretKey: bg.localStorage.getItem("secretKey") || "",
 });
-App.setting = App.Setting.create();
-App.setting.set("serverUrl", "http://10.5.5.83:8080");
-App.setting.set("secretKey", "yTzvPnmThlRBCS0udKyEliEijJ2mR");
+App.setting.addObserver("serverUrl", function(){
+    bg.localStorage.setItem("serverUrl", App.setting.get("serverUrl"));
+    restart();
+});
+App.setting.addObserver("secretKey", function(){
+    bg.localStorage.setItem("secretKey", App.setting.get("secretKey"));
+    restart();
+});
 
 //------------------------------------------------------------
 // communicate with background page
@@ -104,3 +101,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 //        console.log(eval("bg." + request.AsakusaSatelliteUpdate));
     }
 });
+
+function restart(){
+    bg.url = App.setting.get("serverUrl");
+    bg.token = App.setting.get("secretKey");
+    bg.clearData();
+    bg.getNewMessages();
+}

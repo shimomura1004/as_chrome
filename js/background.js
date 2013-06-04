@@ -1,7 +1,5 @@
-//var url = "http://10.5.5.83:8080"
-//var token = "yTzvPnmThlRBCS0udKyEliEijJ2mR"
-var url = "";
-var token = "";
+var url = localStorage.getItem("serverUrl") || "";
+var token = localStorage.getItem("secretKey") || "";
 
 var interval = 10 * 1000;
 
