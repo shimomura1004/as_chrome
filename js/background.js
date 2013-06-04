@@ -1,5 +1,7 @@
-var url = "http://10.5.5.83:8080"
-var token = "yTzvPnmThlRBCS0udKyEliEijJ2mR"
+//var url = "http://10.5.5.83:8080"
+//var token = "yTzvPnmThlRBCS0udKyEliEijJ2mR"
+var url = "";
+var token = "";
 
 var interval = 10 * 1000;
 
@@ -9,6 +11,13 @@ var rooms = [];
 var messages = {};
 var updated_at = {};
 var counter = 0;
+
+function clearData(){
+    rooms = [];
+    messages = [];
+    updated_at = {};
+    counter = 0;
+}
 
 function getNewMessages(){
     function getNewMessageInRoom(room){
@@ -30,6 +39,10 @@ function getNewMessages(){
                 chrome.runtime.sendMessage({AsakusaSatelliteUpdate:update});
             }
         });
+    }
+
+    if (url == "" || token == "") {
+        return;
     }
 
     var data = {auth_token:token};

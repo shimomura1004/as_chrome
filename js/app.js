@@ -33,15 +33,6 @@ App.Message = DS.Model.extend({
     view: DS.attr('string'),
 });
 
-// model setup
-App.Room.FIXTURES = bg.rooms;
-App.rooms = Ember.ArrayController.create({
-    content: [],
-});
-App.messages = Ember.ArrayController.create({
-    content: [],
-});
-
 //------------------------------------------------------------
 // routing set up
 //------------------------------------------------------------
@@ -78,8 +69,34 @@ App.RoomRoute = Ember.Route.extend({
     }
 });
 
+App.ServerUrlTextField = Ember.TextField.extend({
+    serverUrlBinding: "App.Setting.serverUrl",
+    change: function(e){
+        bg.url = App.setting.get("serverUrl");
+        bg.token = App.setting.get("secretKey");
+        bg.clearData();
+        bg.getNewMessages();
+    },
+});
+App.SecretKeyTextField = Ember.TextField.extend({
+    secretKeyBinding: "App.Setting.secretKey",
+    change: function(e){
+        bg.url = App.setting.get("serverUrl");
+        bg.token = App.setting.get("secretKey");
+        bg.clearData();
+        bg.getNewMessages();
+    },
+});
+App.Setting = Ember.Object.extend({
+    serverUrl: "",
+    secretKey: "",
+});
+App.setting = App.Setting.create();
+App.setting.set("serverUrl", "http://10.5.5.83:8080");
+App.setting.set("secretKey", "yTzvPnmThlRBCS0udKyEliEijJ2mR");
+
 //------------------------------------------------------------
-// callbacks
+// communicate with background page
 //------------------------------------------------------------
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     if(request.AsakusaSatelliteUpdate) {

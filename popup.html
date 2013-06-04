@@ -47,7 +47,18 @@
     {{/each}}
     </script>
 
-    <script type="text/x-handlebars" id="setting">
+    <script type="text/x-handlebars" data-template-name="setting">
+      <h3>Settings</h3>
+      <div>
+        <div>
+          <span>URL: </span>
+          {{view App.ServerUrlTextField valueBinding="App.setting.serverUrl"}}
+        </div>
+        <div>
+          <span>SecretKey: </span>
+          {{view App.SecretKeyTextField valueBinding="App.setting.secretKey"}}
+        </div>
+      </div>
     </script>
 
   </body>
