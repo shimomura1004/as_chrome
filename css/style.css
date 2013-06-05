@@ -3,3 +3,30 @@ body {
     background-color: #fafafa;
     width: 480px;
 }
+
+div.container {
+    padding-top: 40px;
+    width: 100%;
+}
+
+div.message {
+    margin-bottom: 10px;
+    border-bottom: #cccccc 1px solid;
+    clear: left;
+    min-height: 50px;
+}
+
+div.message img.user-icon {
+    box-shadow: 1px 1px 2px #999999;
+    max-width: 40px;
+    max-height: 40px;
+    border-radius: 3px;
+    float: left;
+}
+
+div.message span.user-name {
+}
+div.message span.date-time {
+    text-align: right;
+    color: #666;
+}

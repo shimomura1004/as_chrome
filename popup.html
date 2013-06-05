@@ -1,14 +1,23 @@
 <html>
   <head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
   </head>
 
   <body>
     <script type="text/x-handlebars">
-      {{#linkTo 'rooms'}}Room{{/linkTo}}
-      {{#linkTo 'setting'}}Setting{{/linkTo}}
-      {{outlet}}
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+          <ul class="nav">
+            <li>{{#linkTo 'rooms'}}Room{{/linkTo}}</li>
+            <li>{{#linkTo 'setting'}}Setting{{/linkTo}}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="container">
+        {{outlet}}
+      </div>
     </script>
 
     <script type="text/x-handlebars" data-template-name="index">
@@ -30,14 +39,14 @@
     <h3>{{model.room.name}}</h3>
 
     {{#each content.messages}}
-    <div style="margin-bottom: 10px; clear: left;">
+    <div class="message">
       <div>
-        <img {{bindAttr src="profile_image_url"}} style="max-width: 40px; max-height: 40px; border-radius: 3px; float: left;"></img>
+        <img {{bindAttr src="profile_image_url"}} class="user-icon"></img>
       </div>
       <div style="margin-left: 50px;">
         <div style="font-size: 10pt; margin-bottom: 3px;">
-          <span>{{name}}</span>
-          <span>{{created_at}}</span>
+          <span class="user-name">{{name}}</span>
+          <span class="date-time">{{created_at}}</span>
         </div>
         <div>
           <span style="font-size: 12pt;">{{body}}</span>
@@ -67,5 +76,6 @@
   <script src="js/libs/handlebars-1.0.0-rc.4.js"></script>
   <script src="js/libs/ember-1.0.0-rc4.js"></script>
   <script src="js/libs/ember-data-master.js"></script>
+  <script src="js/bootstrap.min.js"></script>
   <script src="js/app.js"></script>
 </html>
