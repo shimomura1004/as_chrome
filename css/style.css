@@ -4,13 +4,22 @@ body {
     width: 480px;
 }
 
+div.navbar a.brand {
+    font-size: 12pt;
+    margin-left: 10px;
+    max-width: 300px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 div.container {
     padding-top: 40px;
     width: 100%;
 }
 
 div.message {
-    margin-bottom: 10px;
+    margin: 5px;
     border-bottom: #cccccc 1px solid;
     clear: left;
     min-height: 50px;
@@ -24,6 +33,9 @@ div.message img.user-icon {
     float: left;
 }
 
+div.message {
+    font-size: 10pt;
+}
 div.message span.user-name {
 }
 div.message span.date-time {

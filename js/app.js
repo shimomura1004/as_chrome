@@ -52,6 +52,8 @@ App.RoomsRoute = Ember.Route.extend({
             rooms.unshift(room);
         });
         controller.set('content', rooms);
+
+        App.title.set("title", "AsakusaSatellite");
     },
 });
 
@@ -66,6 +68,9 @@ App.RoomRoute = Ember.Route.extend({
             });
         }
         controller.set('content', model);
+
+console.log(roomModel);
+        App.title.set("title", roomModel.name);
     }
 });
 
@@ -76,10 +81,7 @@ App.SecretKeyTextField = Ember.TextField.extend({
     secretKeyBinding: "App.Setting.secretKey",
 });
 
-App.setting = (Ember.Object.extend({
-    serverUrl: "",
-    secretKey: "",
-})).create({
+App.setting = Ember.Object.create({
     serverUrl: bg.localStorage.getItem("serverUrl") || "",
     secretKey: bg.localStorage.getItem("secretKey") || "",
 });
@@ -91,6 +93,8 @@ App.setting.addObserver("secretKey", function(){
     bg.localStorage.setItem("secretKey", App.setting.get("secretKey"));
     restart();
 });
+
+App.title = Ember.Object.create({title: "AsakusaSatellite"});
 
 //------------------------------------------------------------
 // communicate with background page

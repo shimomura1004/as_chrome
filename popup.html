@@ -9,8 +9,9 @@
     <script type="text/x-handlebars">
       <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
+          <a class="brand">{{App.title.title}}</a>
           <ul class="nav">
-            <li>{{#linkTo 'rooms'}}Room{{/linkTo}}</li>
+            <li>{{#linkTo 'rooms'}}Rooms{{/linkTo}}</li>
             <li>{{#linkTo 'setting'}}Setting{{/linkTo}}</li>
           </ul>
         </div>
@@ -36,20 +37,18 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="room">
-    <h3>{{model.room.name}}</h3>
-
     {{#each content.messages}}
     <div class="message">
       <div>
         <img {{bindAttr src="profile_image_url"}} class="user-icon"></img>
       </div>
       <div style="margin-left: 50px;">
-        <div style="font-size: 10pt; margin-bottom: 3px;">
+        <div>
           <span class="user-name">{{name}}</span>
           <span class="date-time">{{created_at}}</span>
         </div>
-        <div>
-          <span style="font-size: 12pt;">{{body}}</span>
+        <div class="message-body">
+          <span>{{body}}</span>
         </div>
       </div>
     </div>
