@@ -57,16 +57,16 @@
 
     <script type="text/x-handlebars" data-template-name="setting">
       <h3>Settings</h3>
-      <div>
-        <div>
-          <span>URL: </span>
-          {{view App.ServerUrlTextField valueBinding="App.setting.serverUrl"}}
-        </div>
-        <div>
-          <span>SecretKey: </span>
-          {{view App.SecretKeyTextField valueBinding="App.setting.secretKey"}}
-        </div>
-      </div>
+      <table class="setting table">
+        <tr>
+          <td>URL</td>
+          <td>{{view App.ServerUrlTextField valueBinding="App.setting.serverUrl"}}</td>
+        </tr>
+        <tr>
+          <td>KEY</td>
+          <td>{{view App.SecretKeyTextField valueBinding="App.setting.secretKey"}}</td>
+        </tr>
+      </table>
     </script>
 
   </body>

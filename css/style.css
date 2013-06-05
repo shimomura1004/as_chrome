@@ -14,7 +14,7 @@ div.navbar a.brand {
 }
 
 div.container {
-    padding-top: 40px;
+    padding-top: 50px;
     width: 100%;
 }
 
@@ -39,6 +39,12 @@ div.message {
 div.message span.user-name {
 }
 div.message span.date-time {
+    font-size: 8pt;
+    float: right;
     text-align: right;
     color: #666;
+}
+
+table.setting input {
+    width: 300px;
 }
