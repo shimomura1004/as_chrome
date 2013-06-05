@@ -26,7 +26,7 @@ App.User = DS.Model.extend({
 App.Message = DS.Model.extend({
     room: DS.belongsTo('App.Room'),
     body: DS.attr('string'),
-    created_at: DS.attr('date'),
+    created_at: DS.attr('string'),
     name: DS.attr('string'),
     profile_image_url: DS.attr('string'),
     screen_name: DS.attr('string'),
@@ -64,10 +64,6 @@ App.RoomRoute = Ember.Route.extend({
         model.messages = [];
         if (bg.messages[roomModel.id]) {
             bg.messages[roomModel.id].map(function(m){
-                var d = new Date(m.created_at);
-                m.created_at =
-                    "" + d.getFullYear() + "/" + d.getMonth() + "/" + d.getDay() +
-                    " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
                 model.messages.unshift(m);
             });
         }

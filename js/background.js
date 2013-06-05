@@ -26,11 +26,17 @@ function getNewMessages(){
         }
 
         $.get(url + "/api/v1/message/list.json", data, function(json){
-            json = json.slice(1);
+            json = json.slice(1).map(function(m){
+                d = new Date(m.created_at);
+                m.created_at =
+                    "" + d.getFullYear() + "/" + d.getMonth() + "/" + d.getDay() +
+                    " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+                return m;
+            });
             messages[room.id] = _messages.concat(json);
             counter += json.length;
 
-            chrome.browserAction.setBadgeText({text:""+counter});
+//            chrome.browserAction.setBadgeText({text:""+counter});
 
             if (json.length > 0){
                 var update = "messages['"+room.id+"']";
