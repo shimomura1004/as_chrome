@@ -97,7 +97,7 @@ App.messagesController = Ember.ArrayController.create({
         this.get("content").unshiftObjects(messages);
     },
     addToBottom: function(messages){
-        this.get("content").shiftObjects(messages);
+        this.get("content").pushObjects(messages);
     },
 });
 
@@ -108,7 +108,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     switch(request.AsakusaSatellite) {
     case "update":
         if (App.state.room && (App.state.room.id == request.room.id)) {
-            App.messagesController.addToTop(request.messages);
+            App.messagesController.addToTop(request.messages.reverse());
         }
         break;
     }
