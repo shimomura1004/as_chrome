@@ -21,22 +21,23 @@ App.RoomsRoute = Ember.Route.extend({
         });
         controller.set('content', rooms);
 
-        App.title.set("title", "AsakusaSatellite");
+        App.state.set("title", "AsakusaSatellite");
+        App.state.set("room", undefined);
     },
 });
 
 App.RoomRoute = Ember.Route.extend({
-    setupController: function(controller, roomModel){
-        var model = {};
-        model.room = roomModel;
-        model.messages = [];
-        if (bg.messages[roomModel.id]) {
-            bg.messages[roomModel.id].map(function(m){
-                model.messages.unshift(m);
+    setupController: function(controller, model){
+        var messages = [];
+        if (bg.messages[model.id]) {
+            bg.messages[model.id].map(function(m){
+                messages.unshift(m);
             });
         }
-        controller.set('content', model);
-        App.title.set("title", roomModel.name);
+        App.messagesController.set("content", messages);
+        controller.set("content", model);
+        App.state.set("title", model.name);
+        App.state.set("room", model);
     }
 });
 
@@ -45,7 +46,7 @@ App.MessageTextArea = Ember.TextArea.extend({
     keyDown: function(e) {
         if (e.keyCode == 13 && !e.shiftKey) { // enter
             e.preventDefault();
-            var room_id = this.get("content").get("model").room.id;
+            var room_id = this.get("content").get("model").id;
             bg.sendMessage(App.message.get("body"), room_id);
             App.message.set("body", "");
         }
@@ -74,15 +75,34 @@ App.setting.addObserver("secretKey", function(){
     restart();
 });
 
-App.title = Ember.Object.create({title: "AsakusaSatellite"});
+App.state = Ember.Object.create({
+    title: "Asakusasatellite",
+    room: undefined,
+});
+
+App.MessageView = Ember.View.extend({
+    templateName: "message",
+});
+App.messagesController = Ember.ArrayController.create({
+    content: [],
+    addToTop: function(messages){
+        this.get("content").unshiftObjects(messages);
+    },
+    addToBottom: function(messages){
+        this.get("content").shiftObjects(messages);
+    },
+});
 
 //------------------------------------------------------------
 // communicate with background page
 //------------------------------------------------------------
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-    if(request.AsakusaSatelliteUpdate) {
-        console.log("update "+request.AsakusaSatelliteUpdate);
-//        console.log(eval("bg." + request.AsakusaSatelliteUpdate));
+    switch(request.AsakusaSatellite) {
+    case "update":
+        if (App.state.room && (App.state.room.id == request.room.id)) {
+            App.messagesController.addToTop(request.messages);
+        }
+        break;
     }
 });
 

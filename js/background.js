@@ -37,13 +37,13 @@ function getNewMessages(){
                 return m;
             });
             messages[room.id] = _messages.concat(json);
-            counter += json.length;
-
-//            chrome.browserAction.setBadgeText({text:""+counter});
 
             if (json.length > 0){
-                var update = "messages['"+room.id+"']";
-                chrome.runtime.sendMessage({AsakusaSatelliteUpdate:update});
+                chrome.runtime.sendMessage({
+                    AsakusaSatellite:"update",
+                    room: room,
+                    messages: json
+                });
             }
         });
     }

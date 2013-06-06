@@ -18,6 +18,12 @@ div.container {
     width: 100%;
 }
 
+img.loading-img {
+    display: block;
+    margin: auto;
+    padding: 10px;
+}
+
 div.message-box textarea {
     width: 100%;
 }

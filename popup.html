@@ -9,7 +9,7 @@
     <script type="text/x-handlebars">
       <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
-          <a class="brand">{{App.title.title}}</a>
+          <a class="brand">{{App.state.title}}</a>
           <ul class="nav">
             <li>{{#linkTo 'rooms'}}Rooms{{/linkTo}}</li>
             <li>{{#linkTo 'setting'}}Setting{{/linkTo}}</li>
@@ -21,26 +21,21 @@
       </div>
     </script>
 
-    <script type="text/x-handlebars" data-template-name="index">
-    <div>
-      <span>Hello world from ember.js</span>
-    </div>
-    </script>
-
     <script type="text/x-handlebars" data-template-name="rooms">
-    <ul>
-    {{#each model}}
-    <li>{{#linkTo 'room' this}}{{name}}{{/linkTo}}</li>
-    {{/each}}
-    </ul>
-    {{outlet}}
+      {{#if model}}
+      <ul>
+        {{#each model}}
+        <li>{{#linkTo 'room' this}}{{name}}{{/linkTo}}</li>
+        {{/each}}
+      </ul>
+      {{else}}
+      <img src="img/21-1.gif" class="loading-img"></img>
+      {{/if}}
+
+      {{outlet}}
     </script>
 
-    <script type="text/x-handlebars" data-template-name="room">
-      <div class="message-box">
-        {{view App.MessageTextArea contentBinding="this"}}
-      </div>
-      {{#each content.messages}}
+    <script type="text/x-handlebars" data-template-name="message">
       <div class="message">
         <div>
           <img {{bindAttr src="profile_image_url"}} class="user-icon"></img>
@@ -55,7 +50,20 @@
           </div>
         </div>
       </div>
-      {{/each}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="room">
+      <div class="message-box">
+        {{view App.MessageTextArea contentBinding="this"}}
+      </div>
+
+      {{#if App.messagesController}}
+        {{#each App.messagesController}}
+          {{view App.MessageView}}
+        {{/each}}
+      {{else}}
+        <img src="img/21-1.gif" class="loading-img"></img>
+      {{/if}}
     </script>
 
     <script type="text/x-handlebars" data-template-name="setting">
