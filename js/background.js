@@ -63,3 +63,15 @@ function getNewMessages(){
 
 getNewMessages();
 setInterval(getNewMessages, interval);
+
+
+
+// google cloud messaing for chrome
+chrome.pushMessaging.getChannelId(true, function(resp){
+    console.log(resp.channelId);
+});
+
+chrome.pushMessaging.onMessage.addListener(function (message) {
+console.log(message);
+    alert("message received!: " + message.payload);
+});

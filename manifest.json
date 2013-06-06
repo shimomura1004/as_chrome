@@ -13,7 +13,7 @@
     "scripts": ["js/libs/jquery-1.9.1.js", "js/background.js"]
   },
   "permissions":[
-    "http://*/*", "https://*/*"
+    "http://*/*", "https://*/*", "pushMessaging", "notifications"
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
