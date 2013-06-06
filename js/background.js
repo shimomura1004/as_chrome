@@ -80,7 +80,24 @@ chrome.pushMessaging.getChannelId(true, function(resp){
     console.log(resp.channelId);
 });
 
-chrome.pushMessaging.onMessage.addListener(function (message) {
-console.log(message);
-    alert("message received!: " + message.payload);
+/*
+{channelId:'',
+'subchannelId': '0',
+'payload': '51b03cc1fb2f2e0f5500004c'
+}
+*/
+chrome.pushMessaging.onMessage.addListener(function (info) {
+    console.log(info);
+
+    var data = {api_key: token};
+    $.get(url + "/api/v1/message/" + info.payload + ".json", data, function(json){
+        console.log(json);
+
+        var notification = webkitNotifications.createNotification(
+	    json.profile_image_url,
+	    json.name,
+	    json.body
+	);
+	notification.show();
+    });
 });
