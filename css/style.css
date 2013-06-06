@@ -18,11 +18,16 @@ div.container {
     width: 100%;
 }
 
+div.message-box textarea {
+    width: 100%;
+}
+
 div.message {
+    padding-top: 5px;
     margin: 5px;
-    border-bottom: #cccccc 1px solid;
+    border-top: #cccccc 1px solid;
     clear: left;
-    min-height: 50px;
+    min-height: 40px;
 }
 
 div.message img.user-icon {

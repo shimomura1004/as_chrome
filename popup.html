@@ -37,22 +37,25 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="room">
-    {{#each content.messages}}
-    <div class="message">
-      <div>
-        <img {{bindAttr src="profile_image_url"}} class="user-icon"></img>
+      <div class="message-box">
+        {{view Ember.TextArea}}
       </div>
-      <div style="margin-left: 50px;">
+      {{#each content.messages}}
+      <div class="message">
         <div>
-          <span class="user-name">{{name}}</span>
-          <span class="date-time">{{created_at}}</span>
+          <img {{bindAttr src="profile_image_url"}} class="user-icon"></img>
         </div>
-        <div class="message-body">
-          <span>{{body}}</span>
+        <div style="margin-left: 50px;">
+          <div>
+            <span class="user-name">{{name}}</span>
+            <span class="date-time">{{created_at}}</span>
+          </div>
+          <div class="message-body">
+            <span>{{body}}</span>
+          </div>
         </div>
       </div>
-    </div>
-    {{/each}}
+      {{/each}}
     </script>
 
     <script type="text/x-handlebars" data-template-name="setting">
@@ -74,7 +77,6 @@
   <script src="js/libs/jquery-1.9.1.js"></script>
   <script src="js/libs/handlebars-1.0.0-rc.4.js"></script>
   <script src="js/libs/ember-1.0.0-rc4.js"></script>
-  <script src="js/libs/ember-data-master.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/app.js"></script>
 </html>
