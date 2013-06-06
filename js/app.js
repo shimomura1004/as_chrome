@@ -11,6 +11,14 @@ App.Router.map(function() {
     this.resource("setting");
 });
 
+App.SettingRoute = Ember.Route.extend({
+    setupController: function(controller, model){
+        controller.set("content", model);
+        App.state.set("title", "AsakusaSatellite");
+        App.state.set("room", undefined);
+    },
+});
+
 App.RoomsRoute = Ember.Route.extend({
     setupController: function(controller, model){
         var rooms = [];
