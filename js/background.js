@@ -94,10 +94,13 @@ chrome.pushMessaging.onMessage.addListener(function (info) {
         console.log(json);
 
         var notification = webkitNotifications.createNotification(
-	    json.profile_image_url,
-	    json.name,
-	    json.body
-	);
-	notification.show();
+            json.profile_image_url,
+            json.name,
+            json.body
+        );
+        notification.ondisplay = function(){
+            setTimeout(function(){notification.cancel()}, 3000);
+        };
+        notification.show();
     });
 });
