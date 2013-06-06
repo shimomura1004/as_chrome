@@ -20,7 +20,10 @@ function clearData(){
 function getNewMessages(){
     function getNewMessageInRoom(room){
         var _messages =  messages[room.id] || [];
-        data["room_id"] = room.id;
+        var data = {
+            api_key: token,
+            room_id: room.id,
+        };
         if (_messages && _messages.length > 0) {
             data["since_id"] = _messages[_messages.length - 1].id;
         }
@@ -49,7 +52,7 @@ function getNewMessages(){
         return;
     }
 
-    var data = {auth_token:token};
+    var data = {api_key:token};
     $.get(url + "/api/v1/room/list.json", data, function(json){
         rooms = json;
         $.each(rooms, function(idx, room){
@@ -64,6 +67,12 @@ function getNewMessages(){
 getNewMessages();
 setInterval(getNewMessages, interval);
 
+
+// sending message
+function sendMessage(message, room_id){
+    var data = {room_id: room_id, message: message, api_key: token};
+    $.post(url + "/api/v1/message.json", data);
+}
 
 
 // google cloud messaing for chrome

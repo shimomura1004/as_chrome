@@ -40,11 +40,25 @@ App.RoomRoute = Ember.Route.extend({
     }
 });
 
+App.MessageTextArea = Ember.TextArea.extend({
+    valueBinding: "App.message.body",
+    keyDown: function(e) {
+        if (e.keyCode == 13 && !e.shiftKey) { // enter
+            e.preventDefault();
+            var room_id = this.get("content").get("model").room.id;
+            bg.sendMessage(App.message.get("body"), room_id);
+            App.message.set("body", "");
+        }
+    },
+});
+App.message = Ember.Object.create({});
+
+
 App.ServerUrlTextField = Ember.TextField.extend({
-    serverUrlBinding: "App.Setting.serverUrl",
+    valueBinding: "App.setting.serverUrl",
 });
 App.SecretKeyTextField = Ember.TextField.extend({
-    secretKeyBinding: "App.Setting.secretKey",
+    valueBinding: "App.setting.secretKey",
 });
 
 App.setting = Ember.Object.create({

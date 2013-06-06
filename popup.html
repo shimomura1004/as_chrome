@@ -38,7 +38,7 @@
 
     <script type="text/x-handlebars" data-template-name="room">
       <div class="message-box">
-        {{view Ember.TextArea}}
+        {{view App.MessageTextArea contentBinding="this"}}
       </div>
       {{#each content.messages}}
       <div class="message">
@@ -63,11 +63,11 @@
       <table class="setting table">
         <tr>
           <td>URL</td>
-          <td>{{view App.ServerUrlTextField valueBinding="App.setting.serverUrl"}}</td>
+          <td>{{view App.ServerUrlTextField}}</td>
         </tr>
         <tr>
           <td>KEY</td>
-          <td>{{view App.SecretKeyTextField valueBinding="App.setting.secretKey"}}</td>
+          <td>{{view App.SecretKeyTextField}}</td>
         </tr>
       </table>
     </script>
