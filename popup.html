@@ -67,7 +67,6 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="setting">
-      <h3>Settings</h3>
       <table class="setting table">
         <tr>
           <td>URL</td>
@@ -78,8 +77,14 @@
           <td>{{view App.SecretKeyTextField}}</td>
         </tr>
       </table>
-      {{view Ember.Checkbox}}
-      <span>Receive GCM</span>
+
+      <div class="gcm-checkbox">
+        {{view Ember.Checkbox checkedBinding="App.setting.useGCM"}}
+        <span>Use Google Cloud Messaging for Chrome</span>
+      </div>
+      {{#if useGCM}}
+      {{else}}
+      {{/if}}
     </script>
 
   </body>

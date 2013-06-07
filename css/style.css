@@ -59,3 +59,7 @@ div.message span.date-time {
 table.setting input {
     width: 300px;
 }
+
+div.gcm-checkbox input {
+    margin: 0px;
+}

@@ -1,7 +1,9 @@
 var url = localStorage.getItem("serverUrl") || "";
 var token = localStorage.getItem("secretKey") || "";
+var channelId;
+chrome.pushMessaging.getChannelId(true, function(resp){channelId = resp.channelId});
 
-var interval = 10 * 1000;
+var interval = 30 * 1000;
 
 chrome.browserAction.setBadgeBackgroundColor({color:[190, 190, 190, 230]});
 
@@ -71,30 +73,19 @@ function getNewMessages(){
 }
 
 getNewMessages();
+
+// start polling
 setInterval(getNewMessages, interval);
 
 
-// sending message
+// post message
 function sendMessage(message, room_id){
     var data = {room_id: room_id, message: message, api_key: token};
     $.post(url + "/api/v1/message.json", data);
 }
 
-
-// google cloud messaing for chrome
-chrome.pushMessaging.getChannelId(true, function(resp){
-    console.log(resp.channelId);
-});
-
-/*
-{channelId:'',
-'subchannelId': '0',
-'payload': '51b03cc1fb2f2e0f5500004c'
-}
-*/
+// handler for receiving gcm
 chrome.pushMessaging.onMessage.addListener(function (info) {
-    console.log(info);
-
     var data = {api_key: token};
     $.get(url + "/api/v1/message/" + info.payload + ".json", data, function(json){
         console.log(json);
@@ -102,7 +93,7 @@ chrome.pushMessaging.onMessage.addListener(function (info) {
         var notification = webkitNotifications.createNotification(
             json.profile_image_url,
             json.name,
-            json.body
+            "GCM:"+json.body
         );
         notification.ondisplay = function(){
             setTimeout(function(){notification.cancel()}, 3000);

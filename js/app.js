@@ -73,6 +73,7 @@ App.SecretKeyTextField = Ember.TextField.extend({
 App.setting = Ember.Object.create({
     serverUrl: bg.localStorage.getItem("serverUrl") || "",
     secretKey: bg.localStorage.getItem("secretKey") || "",
+    useGCM: bg.localStorage.getItem('useGCM') == "true",
 });
 App.setting.addObserver("serverUrl", function(){
     bg.localStorage.setItem("serverUrl", App.setting.get("serverUrl"));
@@ -81,6 +82,19 @@ App.setting.addObserver("serverUrl", function(){
 App.setting.addObserver("secretKey", function(){
     bg.localStorage.setItem("secretKey", App.setting.get("secretKey"));
     restart();
+});
+App.setting.addObserver("useGCM", function(){
+    var useGCM = App.setting.get("useGCM");
+    bg.localStorage.setItem("useGCM", useGCM);
+
+    if (App.setting.useGCM) {
+        var url = App.setting.get("serverUrl") + "/chrome_notification/register"
+        var data = {
+            api_key: App.setting.get("secretKey"),
+            channel_id: bg.channelId,
+        };
+        $.get(url, data, function(json){ console.log(json) });
+    }
 });
 
 App.state = Ember.Object.create({
