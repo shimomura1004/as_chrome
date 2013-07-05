@@ -119,11 +119,16 @@ App.messagesController = Ember.ArrayController.create({
 // communicate with background page
 //------------------------------------------------------------
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+    if (!App.state.room || (App.state.room.id != request.room.id)) {
+        return;
+    }
+
     switch(request.AsakusaSatellite) {
     case "update":
-        if (App.state.room && (App.state.room.id == request.room.id)) {
-            App.messagesController.addToTop(request.messages.reverse());
-        }
+        App.messagesController.addToTop(request.messages.reverse());
+        break;
+    case "create":
+        App.messagesController.addToTop([request.message]);
         break;
     }
 });
@@ -132,5 +137,5 @@ function restart(){
     bg.url = App.setting.get("serverUrl");
     bg.token = App.setting.get("secretKey");
     bg.clearData();
-    bg.getNewMessages();
+    bg.getInitialMessages();
 }
