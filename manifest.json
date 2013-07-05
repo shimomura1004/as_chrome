@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name":"AsakusaSatellite for Chrome",
-  "version":"0.1",
+  "version":"0.2",
   "description":"AsakusaSatellite Client for Chrome",
   "icons": { "48": "favicon.ico",
              "128": "favicon.ico" },
