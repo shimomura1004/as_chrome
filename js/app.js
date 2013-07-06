@@ -1,6 +1,15 @@
 var App = Ember.Application.create();
 var bg = chrome.extension.getBackgroundPage();
 
+
+//------------------------------------------------------------
+// helper
+//------------------------------------------------------------
+Ember.Handlebars.helper('safestring', function(value, options) {
+    console.log(value);
+  return new Handlebars.SafeString(value);
+});
+
 //------------------------------------------------------------
 // routing set up
 //------------------------------------------------------------
